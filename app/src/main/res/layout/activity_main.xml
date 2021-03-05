@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity"
+    android:paddingTop="307dp"
+    android:paddingLeft="84dp"
+    android:background="#ffffff">
+
+
+    <ImageButton
+        android:id="@+id/writepdf"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="#ffffff"
+        android:src="@drawable/write"
+        android:layout_margin="20dp"
+        android:clickable="true"
+        app:layout_constraintBottom_toTopOf="@id/Image_convert"
+        app:layout_constraintRight_toLeftOf="@+id/Txt_convert"/>
+
+    <ImageButton
+        android:id="@+id/Txt_convert"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="#ffffff"
+        android:src="@drawable/text"
+        android:layout_margin="20dp"
+        android:clickable="true"
+        app:layout_constraintLeft_toRightOf="@+id/writepdf"
+        app:layout_constraintBottom_toTopOf="@id/openfile"/>
+
+    <ImageButton
+        android:id="@+id/Image_convert"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="#ffffff"
+        android:src="@drawable/image"
+        android:layout_margin="20dp"
+        android:clickable="true"
+        app:layout_constraintTop_toBottomOf="@id/writepdf"
+        app:layout_constraintRight_toLeftOf="@id/openfile"/>
+
+    <ImageButton
+        android:id="@+id/openfile"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="#ffffff"
+        android:src="@drawable/view"
+        android:layout_margin="20dp"
+        android:clickable="true"
+        app:layout_constraintTop_toBottomOf="@id/Txt_convert"
+        app:layout_constraintLeft_toRightOf="@id/Image_convert"/>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
