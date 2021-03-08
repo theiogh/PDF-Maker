@@ -128,7 +128,9 @@ public class MainActivity extends AppCompatActivity {
         openfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(Intent.ACTION_GET_CONTENT).setDataAndType(uri, "*/*"));
+                //startActivity(new Intent(Intent.ACTION_GET_CONTENT).setDataAndType(uri, "*/*"));
+                Intent intent = new Intent(MainActivity.this,PdfView.class);
+                startActivity(intent);
             }
         });
 
@@ -146,9 +148,8 @@ public class MainActivity extends AppCompatActivity {
             Cursor cursor = getContentResolver().query(selectedImageUri, filePath, null, null, null);
             cursor.moveToFirst();
             int columnIndex = cursor.getColumnIndex(filePath[0]);
-            Log.e("columnindex", String.valueOf(columnIndex));
             myPath = cursor.getString(columnIndex);
-            //Log.e("myPath",myPath);
+            Log.e("myPath",myPath);
             mfilename = FilenameUtils.getBaseName(myPath);
             Log.e("mfilename",mfilename);
             cursor.close();

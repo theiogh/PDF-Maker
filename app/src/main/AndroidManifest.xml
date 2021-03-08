@@ -13,6 +13,7 @@
         android:roundIcon="@drawable/pdficon"
         android:supportsRtl="true"
         android:theme="@style/Theme.ConvertPDF">
+        <activity android:name=".PdfView"/>
         <activity android:name=".WritePdfActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>
