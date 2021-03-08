@@ -4,6 +4,7 @@ package com.example.convertpdf;
     사용한 라이브러리 :
     itextpdf version 5.
     Commons-io
+    github의 barteksc 의 android-pdf-viewer.
 */
 
 import androidx.annotation.NonNull;
@@ -75,7 +76,8 @@ public class MainActivity extends AppCompatActivity {
                         Manifest.permission.READ_EXTERNAL_STORAGE},
                 PackageManager.PERMISSION_GRANTED);
 
-
+        // 사용자가 직접 타이핑으로 PDF 파일을 작성할 수 있게 하는 구문의 시작.
+        // 화면 전환이 필요하여 class 를 따로 생성함.
         writepdf.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -84,26 +86,34 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        // Txt 형식의 파일을 PDF 형식의 파일로 변환이 가능토록 하는 구문.
+        // version 체크 와 권한 요청, 해당 Imagebutton 클릭 시 모든유형의 파일을 볼수있는 화면 제공.
+        // 모든 ImageButton 동일함.
         Txt_convert.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // SDK version이 23보다 낮은지 체크.
                 if (Build.VERSION.SDK_INT > Build.VERSION_CODES.M) {
+                    // SDK version이 23보다 높고 권한이 거부되었는지 체크.
                     if (checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)
                             == PackageManager.PERMISSION_DENIED) {
+                        // 거부되었다면 권한 요청.
                         String[] permissions = {Manifest.permission.WRITE_EXTERNAL_STORAGE};
                         requestPermissions(permissions,STORAGE_CODE);
                     }else{
+                        // 거부되지않았다면 본래의 기능을 실행.
                         Intent intent = new Intent(Intent.ACTION_GET_CONTENT).setDataAndType(uri, "*/*");
                         startActivityForResult(intent, 120);
                     }
                 }else {
+                    // SDK version이 23보다 낮더라도 마찬가지로 본래의 기능 실행.
                     Intent intent = new Intent(Intent.ACTION_GET_CONTENT).setDataAndType(uri, "*/*");
                     startActivityForResult(intent, 120);
                 }
             }
         });
 
-
+        // Image 형식의 파일을 PDF 형식의 파일로 변환이 가능토록 하는 구문.
         Image_convert.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -125,10 +135,12 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        // PDF Viewer
+        // 화면 전환을 위해 class를 따로 생성함.
         openfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //startActivity(new Intent(Intent.ACTION_GET_CONTENT).setDataAndType(uri, "*/*"));
+                // MainActivity에서 Pdfview로 화면 전환을 위한 Intent.
                 Intent intent = new Intent(MainActivity.this,PdfView.class);
                 startActivity(intent);
             }
@@ -167,7 +179,9 @@ public class MainActivity extends AppCompatActivity {
 
     private void TextToPDF() {
 
-        // 저장주소
+        // 최종적으로 파일을 저장할 주소를 지정하는 구문입니다.
+        // 최상위 디렉토리의 "PDF Folder 2021"폴더를 저장주소로 지정하고
+        // 해당 폴더가 없다면 생성합니다.
         File root = new File(Environment.getExternalStorageDirectory(),"PDF Folder 2021");
         if ( !root.exists() ){
             root.mkdir();
@@ -178,6 +192,7 @@ public class MainActivity extends AppCompatActivity {
         try {
             // 한글 깨짐 현상을 막기 위해 폰트를 적용했습니다.
             // fontpath 는 폰트파일의 위치입니다.
+            // itextdpf의 API를 사용했습니다. version 5.
             BaseFont bfont = BaseFont.createFont(fontpath,BaseFont.IDENTITY_H,BaseFont.EMBEDDED );
             Font font = new Font(bfont);
             PdfWriter.getInstance(document, new FileOutputStream(file));
@@ -197,6 +212,7 @@ public class MainActivity extends AppCompatActivity {
                 document.add(new Paragraph("\n"));
             }
 
+            // 종료
             document.close();
 
             Toast.makeText(this, file +"가(이) 저장되었습니다.", Toast.LENGTH_SHORT).show();
@@ -211,8 +227,10 @@ public class MainActivity extends AppCompatActivity {
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     private void ImageToPDf() {
 
+        // 저장 폴더의 유무 처리.
         File root = new File(Environment.getExternalStorageDirectory(),"PDF Folder 2021");
         if ( !root.exists() ){
+            // 없을 시 생성.
             root.mkdir();
         }
         File file = new File(root,mfilename+".pdf");

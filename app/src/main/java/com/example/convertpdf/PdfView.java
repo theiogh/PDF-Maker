@@ -73,6 +73,7 @@ public class PdfView extends AppCompatActivity {
 
             File file = new File(myPath);
 
+            // build(앱)에 dependencies밑 'com.github.barteksc:android-pdf-viewer:2.8.2' 추가.
             pdfviewer.fromFile(file)
                      .defaultPage(0)
                      .enableAnnotationRendering(true)

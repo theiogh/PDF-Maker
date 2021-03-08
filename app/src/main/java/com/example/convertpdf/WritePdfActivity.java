@@ -72,17 +72,14 @@ public class WritePdfActivity extends AppCompatActivity {
 
                 String filename = et.getText().toString();
 
-                // 최종적으로 파일을 저장할 주소를 지정하는 구문입니다.
-                // 최상위 디렉토리의 "PDF Folder 2021"폴더를 저장주소로 지정하고
-                // 해당 폴더가 없다면 생성합니다.
+                // 저장 폴더의 유무 처리.
                 File root = new File(Environment.getExternalStorageDirectory(),"PDF Folder 2021");
                 if ( !root.exists() ){
                     root.mkdir();
                 }
-                // 생성될 파일의 저장주소와 이름을 담고있습니다.
+                // 생성될 파일의 저장주소와 이름을 담고있는 file 객체 생성.
                 File file = new File(root, filename + ".pdf");
 
-                // itextdpf의 API를 사용했습니다. version 5.
                 Document document = new Document();
                 try {
                     // 한글 깨짐 현상을 위해 폰트를 직접 지정했습니다.
